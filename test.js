@@ -503,7 +503,9 @@ test('responsiveStyle returns a function', t => {
 
 test('responsiveStyle‘s returned function returns a style object', t => {
   const order = responsiveStyle('order')
+  console.log(order);
   const a = order({ order: 1 })
+  console.log(a);
   t.deepEqual(a, { order: 1 })
 })
 
@@ -551,6 +553,30 @@ test('responsiveStyle boolean props handle arrays', t => {
     '@media screen and (min-width: 40em)': {
       'flex-wrap': false
     }
+  })
+})
+
+test('responsiveStyle take an array of properties and responsive values', t => {
+  const basis = responsiveStyle(['flex-basis', 'width'], 'basis')
+  const a = basis({ basis: [ '10px', 'auto' ] })
+
+  t.deepEqual(a, {
+    'flex-basis': '10px',
+    width: '10px',
+    '@media screen and (min-width: 40em)': {
+      'flex-basis': 'auto',
+      'width': 'auto',
+    },
+  })
+})
+
+test('responsiveStyle take an array of properties and single value', t => {
+  const basis = responsiveStyle(['flex-basis', 'width'], 'basis')
+  const a = basis({ basis: '10px' })
+
+  t.deepEqual(a, {
+    'flex-basis': '10px',
+    width: '10px',
   })
 })
 
